@@ -34,5 +34,5 @@ setInterval(function(){
       writeOff(12)
       writeOn(7)
     },10000)
-  }, 10000)
+  }, 10000)}
   ,30000)
