@@ -1,8 +1,8 @@
 var gpio = require('rpi-gpio');
 
-gpio.setup(7, gpio.DIR_OUT);
-gpio.setup(11, gpio.DIR_OUT);
-gpio.setup(12, gpio.DIR_OUT);
+gpio.setup(7, gpio.DIR_OUT, writeOn);
+gpio.setup(11, gpio.DIR_OUT, writeOn);
+gpio.setup(12, gpio.DIR_OUT, writeOn);
 
 
 
