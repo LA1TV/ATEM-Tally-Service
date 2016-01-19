@@ -17,4 +17,4 @@ function closePins() {
 }
 
 
-setTimeout(closePins, 2000);
+setTimeout(closePins, 20000);
