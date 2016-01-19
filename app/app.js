@@ -17,4 +17,5 @@ function closePins() {
 }
 
 
-setTimeout(closePins, 20000);
+setTimeout(function(){gpio.write(7, false, function(err){console.log("off!");});}, 20000);
+setTimeout(closePins, 30000);
