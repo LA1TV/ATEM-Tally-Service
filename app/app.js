@@ -1,8 +1,8 @@
 var gpio = require('rpi-gpio');
 
 gpio.setup(7, gpio.DIR_OUT, writeOn);
-gpio.setup(11, gpio.DIR_OUT, writeOn);
-gpio.setup(12, gpio.DIR_OUT, writeOn);
+//gpio.setup(11, gpio.DIR_OUT, writeOn);
+//gpio.setup(12, gpio.DIR_OUT, writeOn);
 
 
 
@@ -13,13 +13,13 @@ function closePins() {
 }
 
 function writeOn(pin){
-  gpio.write(pin, true, function(err) {
+  gpio.write(7, true, function(err) {
       if (err) throw err;
       console.log('Written on to pin '+pin);
   });
 }
 function writeOff(pin){
-  gpio.write(pin, false, function(err) {
+  gpio.write(7, false, function(err) {
       if (err) throw err;
       console.log('Written off to pin '+pin);
   });
@@ -27,7 +27,7 @@ function writeOff(pin){
 
 
 writeOn(7);
-setInterval(function(){
+/*setInterval(function(){
   writeOff(7);
   writeOn(11);
   setTimeout(function(){
@@ -38,4 +38,4 @@ setInterval(function(){
       writeOn(7)
     },10000)
   }, 10000)}
-  ,30000)
+  ,30000)*/
