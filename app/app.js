@@ -12,16 +12,16 @@ function closePins() {
     });
 }
 
-function writeOn(pin){
+function writeOn(){
   gpio.write(7, true, function(err) {
       if (err) throw err;
-      console.log('Written on to pin '+pin);
+    //  console.log('Written on to pin '+pin);
   });
 }
-function writeOff(pin){
+function writeOff(){
   gpio.write(7, false, function(err) {
       if (err) throw err;
-      console.log('Written off to pin '+pin);
+//      console.log('Written off to pin '+pin);
   });
 }
 
