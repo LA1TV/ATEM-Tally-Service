@@ -1,32 +1,33 @@
-var gpio = require('rpi-gpio');
+var gpio = require('pi-gpio');
 
-gpio.setup(7, gpio.DIR_OUT, writeOn);
-//gpio.setup(11, gpio.DIR_OUT, writeOn);
-//gpio.setup(12, gpio.DIR_OUT, writeOn);
+gpio.open(7, 'outut');
+gpio.open(11, 'outut');
+gpio.open(12, 'outut');
 
 
-
-function closePins() {
-    gpio.destroy(function() {
-        console.log('All pins unexported');
-    });
-}
-
-function writeOn(){
-  gpio.write(7, true, function(err) {
+function writeOn(pin){
+  console.log("called writeOn");
+  gpio.write(pin, 1, function(err) {
       if (err) throw err;
-    //  console.log('Written on to pin '+pin);
+      console.log('Written on to pin');
   });
 }
-function writeOff(){
-  gpio.write(7, false, function(err) {
+function writeOff(pin){
+  console.log("called writeOff");
+  gpio.write(pin, 0, function(err) {
       if (err) throw err;
-//      console.log('Written off to pin '+pin);
+      console.log('Written off to pin');
   });
 }
 
-
-writeOn(7);
+var pin7=false;
+setTimout(function(){
+  if(pin7){
+    writeOff(7);
+  }else{
+    writeOn(7);
+  }
+});
 /*setInterval(function(){
   writeOff(7);
   writeOn(11);
