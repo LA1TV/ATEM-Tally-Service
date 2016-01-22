@@ -1,8 +1,8 @@
-var gpio = require('pi-gpio');
+var gpio = require('onoff').gpio;
 
-gpio.open(7, 'outut');
-gpio.open(11, 'outut');
-gpio.open(12, 'outut');
+var red = new gpio(7, 'out');
+//gpio.open(11, 'outut');
+//gpio.open(12, 'outut');
 
 
 function writeOn(pin){
@@ -23,11 +23,11 @@ function writeOff(pin){
 var pin7=false;
 setTimout(function(){
   if(pin7){
-    writeOff(7);
+    red.write(0, function(){if (err) throw err; pin7= true;});
   }else{
-    writeOn(7);
+    red.write(1, function(){if (err) throw err; pin7 = false;});
   }
-});
+},1000);
 /*setInterval(function(){
   writeOff(7);
   writeOn(11);
