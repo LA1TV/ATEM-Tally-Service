@@ -26,5 +26,5 @@ atem.on('stateChanged', function(err, state) {
     red3.writeSync(1);
   }else{
     red3.writeSync(0);
-}
-}
+  }
+});
