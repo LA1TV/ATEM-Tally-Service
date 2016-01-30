@@ -1,42 +1,32 @@
 var gpio = require('onoff').gpio;
 
-var red = new gpio(7, 'out');
-//gpio.open(11, 'outut');
-//gpio.open(12, 'outut');
+var ATEM = require('applest-atem');
+
+var atem = new ATEM();
+atem.connect('192.168.72.51'); // Replace your ATEM switcher. address.
 
 
-function writeOn(pin){
-  console.log("called writeOn");
-  gpio.write(pin, 1, function(err) {
-      if (err) throw err;
-      console.log('Written on to pin');
-  });
-}
-function writeOff(pin){
-  console.log("called writeOff");
-  gpio.write(pin, 0, function(err) {
-      if (err) throw err;
-      console.log('Written off to pin');
-  });
-}
+var red1 = new gpio(7, 'out');
+var red2 = new gpio(8, 'out');
+var red3 = new gpio(9, 'out');
 
-var pin7=false;
-setTimout(function(){
-  if(pin7){
-    red.write(0, function(){if (err) throw err; pin7= true;});
-  }else{
-    red.write(1, function(){if (err) throw err; pin7 = false;});
+atem.on('stateChanged', function(err, state) {
+  console.log(state.tally); // catch the ATEM tally state.
+
+  if(state.tally[1]>=2){ //Camera 1
+    red1.writeSync(1);
+  }else {
+    red1.writeSync(0);
   }
-},1000);
-/*setInterval(function(){
-  writeOff(7);
-  writeOn(11);
-  setTimeout(function(){
-    writeOff(11);
-    writeOn(12);
-    setTimeout(function(){
-      writeOff(12)
-      writeOn(7)
-    },10000)
-  }, 10000)}
-  ,30000)*/
+
+  if(state.tally[2]>=2){ //Camera 2
+    red2.writeSync(1);
+  }else{
+    red2.writeSync(0);
+  }
+  if(state.tally[3]>=2){ //Camera 3
+    red3.writeSync(1);
+  }else{
+    red3.writeSync(0);
+  }
+});
