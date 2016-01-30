@@ -1,10 +1,8 @@
-var gpio = require('onoff').gpio;
-
+var gpio = require('onoff').Gpio;
 var ATEM = require('applest-atem');
 
 var atem = new ATEM();
 atem.connect('192.168.72.51'); // Replace your ATEM switcher. address.
-
 
 var red1 = new gpio(7, 'out');
 var red2 = new gpio(8, 'out');
@@ -28,5 +26,5 @@ atem.on('stateChanged', function(err, state) {
     red3.writeSync(1);
   }else{
     red3.writeSync(0);
-  }
-});
+}
+}
