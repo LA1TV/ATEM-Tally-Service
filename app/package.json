@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "onoff": "*",
-    "applest-atem": "*"
+    "applest-atem": "*",
+    "node-env-file": "*"
   }
 }

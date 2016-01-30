@@ -11,20 +11,20 @@ var red3 = new gpio(9, 'out');
 atem.on('stateChanged', function(err, state) {
   console.log(state.tally); // catch the ATEM tally state.
 
-  if(state.tally[1]>=2){ //Camera 1
+  if (state.tally[1] >= 2) { //Camera 1
     red1.writeSync(1);
-  }else {
+  } else {
     red1.writeSync(0);
   }
 
-  if(state.tally[2]>=2){ //Camera 2
+  if (state.tally[2] >= 2) { //Camera 2
     red2.writeSync(1);
-  }else{
+  } else {
     red2.writeSync(0);
   }
-  if(state.tally[3]>=2){ //Camera 3
+  if (state.tally[3] >= 2) { //Camera 3
     red3.writeSync(1);
-  }else{
+  } else {
     red3.writeSync(0);
   }
 });
