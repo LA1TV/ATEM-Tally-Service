@@ -15,15 +15,14 @@ function light(cameraID, programPin, friendlyName) {
   this.cameraID = cameraID;
   this.programPin = programPin;
   this.friendlyName = friendlyName;
-  var that = this;
   this.led = new gpio(this.programPin, 'out');
   this.init = function(atem) {
     atem.on('stateChanged', function(err, state) {
-        that.led.write(state.tallys[that.cameraID] == 1, function(err) {
+        this.led.write(state.tallys[that.cameraID] == 1, function(err) {
           if (err) throw err;
         });
     });
-  };
+  }.bind(this);
 }
 var red1 = new light(0, 4, 'Camera 1');
 red1.init(atem);
