@@ -14,21 +14,21 @@ var red3 = new gpio(9, 'out');
 atem.on('stateChanged', function(err, state) {
   console.log(state.tallys); // catch the ATEM tally state.
 
-  if(state.tallys[1]>=2){ //Camera 1
-    red1.writeSync(1);
+  if(state.tallys[1]==1){ //Camera 1
+    red1.write(1, function(err){if (err) throw err; });
   }else {
-    red1.writeSync(0);
+    red1.write(0, function(err){if (err) throw err; });
   }
 
-  if(state.tallys[2]>=2){ //Camera 2
-    red2.writeSync(1);
+  if(state.tallys[2]==1){ //Camera 2
+    red2.write(1, function(err){if (err) throw err; });
   }else{
-    red2.writeSync(0);
+    red2.write(0, function(err){if (err) throw err; });
   }
-  if(state.tallys[3]>=2){ //Camera 3
-    red3.writeSync(1);
+  if(state.tallys[3]==1){ //Camera 3
+    red3.write(1, function(err){if (err) throw err; });
   }else{
-    red3.writeSync(0);
+    red3.write(0, function(err){if (err) throw err; });
   }
   console.log('finished callback');
 });
