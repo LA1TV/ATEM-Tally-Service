@@ -32,3 +32,4 @@ function light(cameraID, programPin, friendlyName) {
   };
 }
 var red1 = new light(0, 4, 'Camera 1');
+red1.init(atem);
