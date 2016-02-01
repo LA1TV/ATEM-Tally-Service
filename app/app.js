@@ -1,39 +1,46 @@
 var gpio = require('onoff').Gpio;
 var ATEM = require('applest-atem');
-var env     = require('node-env-file');
+var env = require('node-env-file');
+var events = require('events');
 env(__dirname + '/.env');
-console.log(process.env);
+
+var cameraID = process.env.CAMIDS.split(',');
+var cameraPins = process.env.CAMPINS.split(',');
+
+//console.log(process.env);
 
 var atem = new ATEM();
-atem.connect('192.168.72.51'); // Replace your ATEM switcher. address.
+atem.connect(process.env.ATEMIP);
 
-var red1 = new gpio(7, 'out');
-var red2 = new gpio(8, 'out');
-var red3 = new gpio(9, 'out');
-
-var lastTallys;
-
-atem.on('stateChanged', function(err, state) {
-  if (lastTallys!=state.tallys){
-    console.log("New tally info! " + state.tallys);
+var atemWatcher = new events.EventEmitter();
+var lastTallys = [];
+atem.on('stateChanged', function(err, state){
+  if (lastTallys != state.tallys && state.tallys.length>1) {
+    atemWatcher.emit('stateChanged');
+    lastTallys = state.tallys;
   }
-  lastTallys = state.tallys;
-
-  if(state.tallys[1]==1){ //Camera 1
-    red1.write(1, function(err){if (err) throw err; });
-  }else {
-    red1.write(0, function(err){if (err) throw err; });
-  }
-
-  if(state.tallys[2]==1){ //Camera 2
-    red2.write(1, function(err){if (err) throw err; });
-  }else{
-    red2.write(0, function(err){if (err) throw err; });
-  }
-  if(state.tallys[3]==1){ //Camera 3
-    red3.write(1, function(err){if (err) throw err; });
-  }else{
-    red3.write(0, function(err){if (err) throw err; });
-  }
-//  console.log('finished callback');
 });
+
+
+function light(cameraID, programPin, friendlyName) {
+  console.log(friendlyName + ' created as new light on pin ' + programPin + '.');
+  this.cameraID = cameraID;
+  this.programPin = programPin;
+  this.friendlyName = friendlyName;
+  this.led = new gpio(this.programPin, 'out');
+  var that = this;
+  this.init = function(atem) {
+    atemWatcher.on('stateChanged', function(err) {
+      that.led.write(+(atem.state.tallys[that.cameraID] == 1), function(err) {
+        if (err) throw err;
+      });
+    });
+  };
+}
+var red1 = new light(0, 14, 'Camera 1');
+var red2 = new light(1, 15, 'Camera 2');
+var red3 = new light(2, 18, 'Camera 3');
+
+red1.init(atem);
+red2.init(atem);
+red3.init(atem);
