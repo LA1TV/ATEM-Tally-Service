@@ -15,7 +15,7 @@ function light(cameraID, programPin, friendlyName) {
   this.cameraID = cameraID;
   this.programPin = programPin;
   this.friendlyName = friendlyName;
-  that = this;
+  var that = this;
   this.led = new gpio(this.programPin, 'out');
   this.init = function(atem) {
     atem.on('stateChanged', function(err, state) {
