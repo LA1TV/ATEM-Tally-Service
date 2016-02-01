@@ -9,7 +9,7 @@ var cameraPins = process.env.cameraPins.split(',');
 console.log(process.env);
 
 var atem = new ATEM();
-atem.connect('192.168.72.51'); // Replace your ATEM switcher. address.
+atem.connect(process.env.atemIP);
 
 function light(cameraID, programPin, friendlyName) {
   this.cameraID = cameraID;
@@ -22,7 +22,6 @@ function light(cameraID, programPin, friendlyName) {
         that.led.write(state.tallys[that.cameraID] == 1, function(err) {
           if (err) throw err;
         });
-
     });
   };
 }
