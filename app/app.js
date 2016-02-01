@@ -35,5 +35,5 @@ atem.on('stateChanged', function(err, state) {
   }else{
     red3.write(0, function(err){if (err) throw err; });
   }
-  console.log('finished callback');
+//  console.log('finished callback');
 });
