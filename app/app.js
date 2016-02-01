@@ -35,6 +35,7 @@ function light(cameraID, programPin, friendlyName) {
       console.log(that.friendlyName + ' ' + atem.state.tallys[that.cameraID]);
       that.led.write(atem.state.tallys[that.cameraID] == 1, function(err) {
         if (err) throw err;
+        console.log(that.friendlyName + "'s LED written as " + atem.state.tallys[that.cameraID]);
       });
     });
   };
