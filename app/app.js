@@ -33,7 +33,7 @@ function light(cameraID, programPin, friendlyName) {
   this.init = function(atem) {
     atemWatcher.on('stateChanged', function(err) {
       console.log(that.friendlyName + ' ' + atem.state.tallys[that.cameraID]);
-      that.led.write(atem.state.tallys[that.cameraID] == 1, function(err) {
+      that.led.write(+(atem.state.tallys[that.cameraID] == 1), function(err) {
         if (err) throw err;
         console.log(that.friendlyName + "'s LED written as " + atem.state.tallys[that.cameraID]);
       });
