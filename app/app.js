@@ -3,13 +3,13 @@ var ATEM = require('applest-atem');
 var env = require('node-env-file');
 env(__dirname + '/.env');
 
-var cameraID = process.env.cameraID.split(',');
-var cameraPins = process.env.cameraPins.split(',');
+var cameraID = process.env.CAMIDS.split(',');
+var cameraPins = process.env.CAMPINS.split(',');
 
-console.log(process.env);
+//console.log(process.env);
 
 var atem = new ATEM();
-atem.connect(process.env.atemIP);
+atem.connect(process.env.ATEMIP);
 
 function light(cameraID, programPin, friendlyName) {
   this.cameraID = cameraID;
@@ -18,7 +18,7 @@ function light(cameraID, programPin, friendlyName) {
   this.led = new gpio(this.programPin, 'out');
   this.init = function(atem) {
     atem.on('stateChanged', function(err, state) {
-        this.led.write(state.tallys[that.cameraID] == 1, function(err) {
+        this.led.write(state.tallys[this.cameraID] == 1, function(err) {
           if (err) throw err;
         });
     });
