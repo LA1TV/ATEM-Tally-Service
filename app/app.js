@@ -24,7 +24,7 @@ atem.on('stateChanged', function(err, state){
 
 
 function light(cameraID, programPin, friendlyName) {
-  console.log(friendlyName + ' created as new light.');
+  console.log(friendlyName + ' created as new light on pin ' + programPin + '.');
   this.cameraID = cameraID;
   this.programPin = programPin;
   this.friendlyName = friendlyName;
@@ -32,10 +32,8 @@ function light(cameraID, programPin, friendlyName) {
   var that = this;
   this.init = function(atem) {
     atemWatcher.on('stateChanged', function(err) {
-      console.log(that.friendlyName + ' ' + atem.state.tallys[that.cameraID]);
       that.led.write(+(atem.state.tallys[that.cameraID] == 1), function(err) {
         if (err) throw err;
-        console.log(that.friendlyName + "'s LED written as " + atem.state.tallys[that.cameraID]);
       });
     });
   };
