@@ -16,7 +16,6 @@ var atemWatcher = new events.EventEmitter();
 var lastTallys = [];
 atem.on('stateChanged', function(err, state){
   if (lastTallys != state.tallys && state.tallys.length>1) {
-    console.log('New tally info emitting!');
     atemWatcher.emit('stateChanged');
     lastTallys = state.tallys;
   }
