@@ -19,15 +19,10 @@ function light(cameraID, programPin, friendlyName) {
   this.led = new gpio(this.programPin, 'out');
   this.init = function(atem) {
     atem.on('stateChanged', function(err, state) {
-      if (state.tallys[that.cameraID] == 1) {
-        that.led.write(1, function(err) {
+        that.led.write(state.tallys[that.cameraID] == 1, function(err) {
           if (err) throw err;
         });
-      } else {
-        that.led.write(0, function(err) {
-          if (err) throw err;
-        });
-      }
+
     });
   };
 }
