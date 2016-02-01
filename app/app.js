@@ -30,4 +30,5 @@ atem.on('stateChanged', function(err, state) {
   }else{
     red3.writeSync(0);
   }
+  console.log('finished callback');
 });
