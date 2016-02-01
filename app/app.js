@@ -15,10 +15,9 @@ atem.connect(process.env.ATEMIP);
 var atemWatcher = new events.EventEmitter();
 var lastTallys = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 atem.on('stateChanged', function(err, state){
-  console.log(state)
   if (lastTallys != state.tallys && state.tallys.length>1) {
+    console.log('New tally info emitting! ' + state.tallys);
     atemWatcher.emit('stateChanged', state.tallys);
-    console.log('New tally info emitted');
     lastTallys = state.tallys;
   }
 });
