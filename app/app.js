@@ -32,7 +32,7 @@ function light(cameraID, programPin, friendlyName) {
   var that = this;
   this.init = function(atem) {
     atemWatcher.on('stateChanged', function(err) {
-      console.log(atem.state.tallys[that.cameraID]);
+      console.log(that.friendlyName + ' ' + atem.state.tallys[that.cameraID]);
       that.led.write(atem.state.tallys[that.cameraID] == 1, function(err) {
         if (err) throw err;
       });
@@ -40,4 +40,9 @@ function light(cameraID, programPin, friendlyName) {
   };
 }
 var red1 = new light(0, 14, 'Camera 1');
+var red2 = new light(1, 15, 'Camera 2');
+var red3 = new light(2, 18, 'Camera 3');
+
 red1.init(atem);
+red2.init(atem);
+red3.init(atem);
