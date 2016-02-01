@@ -31,8 +31,8 @@ function light(cameraID, programPin, friendlyName) {
   this.led = new gpio(this.programPin, 'out');
   var that = this;
   this.init = function(atem) {
-    atemWatcher.on('stateChanged', function(err, state) {
-      that.led.write(state.tallys[that.cameraID] == 1, function(err) {
+    atemWatcher.on('stateChanged', function(err, tallys) {
+      that.led.write(tallys[that.cameraID] == 1, function(err) {
         if (err) throw err;
       });
     });
