@@ -11,8 +11,13 @@ var red1 = new gpio(7, 'out');
 var red2 = new gpio(8, 'out');
 var red3 = new gpio(9, 'out');
 
+var lastTallys;
+
 atem.on('stateChanged', function(err, state) {
-  console.log(state.tallys); // catch the ATEM tally state.
+  if (lastTallys!=state.tallys){
+    console.log("New tally info! " + state.tallys);
+  }
+  lastTallys = state.tallys;
 
   if(state.tallys[1]==1){ //Camera 1
     red1.write(1, function(err){if (err) throw err; });
