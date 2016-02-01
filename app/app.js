@@ -37,7 +37,7 @@ function light(cameraID, programPin, friendlyName) {
 atem.on('connect',function(){
 var leds = [];
 for (var i in cameraIDs){
-  leds[i]=new light(cameraIDs[i], cameraPins[i], atem.state.channels[i].name);
+  leds[i]=new light(cameraIDs[i], cameraPins[i], atem.state.channels[+i+1].name);
   leds[i].init();
 }
 });
