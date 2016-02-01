@@ -13,7 +13,7 @@ var atem = new ATEM();
 atem.connect(process.env.ATEMIP);
 
 var atemWatcher = new events.EventEmitter();
-var lastTallys = [];
+var lastTallys = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 atem.on('stateChanged', function(err, state){
   if (lastTallys != state.tallys) {
     atemWatcher.emit('stateChanged', state.tallys);
@@ -32,6 +32,7 @@ function light(cameraID, programPin, friendlyName) {
   var that = this;
   this.init = function(atem) {
     atemWatcher.on('stateChanged', function(err, tallys) {
+      console.log('incoming tallys as  ' + tallys);
       that.led.write(tallys[that.cameraID] == 1, function(err) {
         if (err) throw err;
       });
