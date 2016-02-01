@@ -13,11 +13,11 @@ var atem = new ATEM();
 atem.connect(process.env.ATEMIP);
 
 var atemWatcher = new events.EventEmitter();
-var lastTallys = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var lastTallys = [];
 atem.on('stateChanged', function(err, state){
   if (lastTallys != state.tallys && state.tallys.length>1) {
-    console.log('New tally info emitting! ' + state.tallys);
-    atemWatcher.emit('stateChanged', state);
+    console.log('New tally info emitting!');
+    atemWatcher.emit('stateChanged');
     lastTallys = state.tallys;
   }
 });
@@ -31,9 +31,9 @@ function light(cameraID, programPin, friendlyName) {
   this.led = new gpio(this.programPin, 'out');
   var that = this;
   this.init = function(atem) {
-    atemWatcher.on('stateChanged', function(err, state) {
-      console.log('incoming tallys as  ' + state.tallys);
-      that.led.write(tallys[that.cameraID] == 1, function(err) {
+    atemWatcher.on('stateChanged', function(err) {
+      console.log(atem.state.tallys[that.cameraID]);
+      that.led.write(atem.state.tallys[that.cameraID] == 1, function(err) {
         if (err) throw err;
       });
     });
