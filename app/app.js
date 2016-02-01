@@ -12,8 +12,8 @@ atem.connect(process.env.ATEMIP);
 
 var atemWatcher = new events.EventEmitter();
 var lastTallys = [];
-atem.on('stateChanged', function(err, state) {
-  if (lastTallys != state.tallys && state.tallys.length > 1) {
+atem.on('stateChanged', function(err, state){
+  if (lastTallys != state.tallys && state.tallys.length>1) {
     atemWatcher.emit('stateChanged');
     lastTallys = state.tallys;
   }
@@ -34,9 +34,10 @@ function light(cameraID, programPin, friendlyName) {
     });
   };
 }
-
+atem.on('connect',function(){
 var leds = [];
-for (var i in cameraIDs) {
-  leds[i] = new light(cameraIDs[i], cameraPins[i], atem.state.channels[i].name);
+for (var i in cameraIDs){
+  leds[i]=new light(cameraIDs[i], cameraPins[i], atem.state.channels[i].name);
   leds[i].init();
 }
+});
