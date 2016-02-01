@@ -4,23 +4,20 @@ var env = require('node-env-file');
 var events = require('events');
 env(__dirname + '/.env');
 
-var cameraID = process.env.CAMIDS.split(',');
+var cameraIDs = process.env.CAMIDS.split(',');
 var cameraPins = process.env.CAMPINS.split(',');
-
-//console.log(process.env);
 
 var atem = new ATEM();
 atem.connect(process.env.ATEMIP);
 
 var atemWatcher = new events.EventEmitter();
 var lastTallys = [];
-atem.on('stateChanged', function(err, state){
-  if (lastTallys != state.tallys && state.tallys.length>1) {
+atem.on('stateChanged', function(err, state) {
+  if (lastTallys != state.tallys && state.tallys.length > 1) {
     atemWatcher.emit('stateChanged');
     lastTallys = state.tallys;
   }
 });
-
 
 function light(cameraID, programPin, friendlyName) {
   console.log(friendlyName + ' created as new light on pin ' + programPin + '.');
@@ -37,10 +34,9 @@ function light(cameraID, programPin, friendlyName) {
     });
   };
 }
-var red1 = new light(0, 14, 'Camera 1');
-var red2 = new light(1, 15, 'Camera 2');
-var red3 = new light(2, 18, 'Camera 3');
 
-red1.init(atem);
-red2.init(atem);
-red3.init(atem);
+var leds = [];
+for (var i in cameraIDs) {
+  leds[i] = new light(cameraIDs[i], cameraPins[i], atem.state.channels[i].name);
+  leds[i].init();
+}
