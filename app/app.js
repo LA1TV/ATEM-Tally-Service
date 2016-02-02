@@ -28,18 +28,18 @@ function light(cameraID, programPin, friendlyName) {
   var that = this;
   this.init = function(atem) {
     atemWatcher.on('stateChanged', function(err) {
-      that.led.write(+(atem.state.tallys[that.cameraID] == 1), function(err) {
+      that.led.write((atem.state.tallys[that.cameraID] == 1)|0, function(err) {
         if (err) throw err;
       });
     });
   };
 }
 atem.on('connect',function(){
-var leds = [];
-setTimeout(function(){
-for (var i in cameraIDs){
-  leds[i]=new light(cameraIDs[i], cameraPins[i], atem.state.channels[+i+1].name);
-  leds[i].init(atem);
-}
-}, 500);
+  var leds = [];
+  setTimeout(function(){
+    for (var i in cameraIDs){
+      leds[i]=new light(cameraIDs[i], cameraPins[i], atem.state.channels[+i+1].name);
+      leds[i].init(atem);
+    }
+  }, 500);
 });
