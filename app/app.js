@@ -28,7 +28,7 @@ function light(cameraID, programPin, friendlyName) {
   var that = this;
   this.init = function(atem) {
     atemWatcher.on('stateChanged', function(err) {
-      that.led.write((atem.state.tallys[that.cameraID] == 1)|0, function(err) {
+      that.led.write((atem.state.tallys[that.cameraID] == 1 || atem.state.tallys[that.cameraID] == 3)|0, function(err) {
         if (err) throw err;
       });
     });
