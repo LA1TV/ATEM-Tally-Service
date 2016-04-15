@@ -29,25 +29,15 @@ function Light(inputId, pin, preview, invert, friendlyName) {
       if (err) {
         throw err;
       }
-      var programState = atem.state.tallys[that.cameraID] === 1 || atem.state.tallys[that.cameraID] === 3;
-      var previewState = atem.state.tallys[that.cameraID] === 2 || atem.state.tallys[that.cameraID] === 3;
+      var state = preview?atem.state.tallys[that.cameraID] === 1 || atem.state.tallys[that.cameraID] === 3:atem.state.tallys[that.cameraID] === 2 || atem.state.tallys[that.cameraID] === 3;
       if (invert) {
-        programState = !programState;
-        previewState = !previewState;
+        state=!state;
       }
-      if (preview) {
-        that.led.write(previewState|0, function(err) { //|0 makes it 1/0 not true/false
-          if (err) {
-            throw err;
-          }
-        });
-      } else {
-        that.led.write(programState|0, function(err) {
-          if (err) {
-            throw err;
-          }
-        });
-      }
+      that.led.write(state?1:0, function(err) {
+        if (err) {
+          throw err;
+        }
+      });
     });
   };
 }
