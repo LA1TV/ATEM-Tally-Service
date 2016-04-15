@@ -1,0 +1,19 @@
+[{
+  "pin": 4,
+  "inputId": 0,
+  "name": "Camera 1",
+  "preview": false,
+  "invert": false
+}, {
+  "pin": 14,
+  "inputId": 1,
+  "name": "Camera 2",
+  "preview": false,
+  "invert": false
+}, {
+  "pin": 15,
+  "inputId": 2,
+  "name": "Camera 3",
+  "preview": false,
+  "invert": false
+}]
