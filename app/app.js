@@ -36,13 +36,13 @@ function Light(inputId, pin, preview, invert, friendlyName) {
         previewState = !previewState;
       }
       if (preview) {
-        that.led.write(previewState, function(err) {
+        that.led.write(previewState|0, function(err) { //|0 makes it 1/0 not true/false
           if (err) {
             throw err;
           }
         });
       } else {
-        that.led.write(programState, function(err) {
+        that.led.write(programState|0, function(err) {
           if (err) {
             throw err;
           }
