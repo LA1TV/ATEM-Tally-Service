@@ -9,7 +9,7 @@
   "inputId": 1,
   "name": "Camera 2",
   "preview": false,
-  "invert": false
+  "invert": true
 }, {
   "pin": 15,
   "inputId": 2,
