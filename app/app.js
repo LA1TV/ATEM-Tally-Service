@@ -29,7 +29,7 @@ function Light(inputId, pin, preview, invert, friendlyName) {
       if (err) {
         throw err;
       }
-      var state = preview?atem.state.tallys[that.cameraID] === 1 || atem.state.tallys[that.cameraID] === 3:atem.state.tallys[that.cameraID] === 2 || atem.state.tallys[that.cameraID] === 3;
+      var state = preview?atem.state.tallys[that.cameraID] === 2 || atem.state.tallys[that.cameraID] === 3:atem.state.tallys[that.cameraID] === 1 || atem.state.tallys[that.cameraID] === 3;
       if (invert) {
         state=!state;
       }
