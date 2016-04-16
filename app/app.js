@@ -46,7 +46,7 @@ atem.once('connect', function() {
   var leds = [];
   setTimeout(function() {
     for (var i in lights) {
-      if (lights[i].inputID) {
+      if(lights[i].hasOwnProperty("inputId")){
         leds[i] = new Light(lights[i].inputId, lights[i].pin, lights[i].preview, lights[i].invert, lights[i].name);
         leds[i].init(atem);
       }
