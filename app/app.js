@@ -25,15 +25,16 @@ function Light(inputId, pin, preview, invert, friendlyName) {
   this.led = new Gpio(this.pin, 'out');
   var that = this;
   this.init = function(atem) {
+    that.initialised = true;
     atemWatcher.on('stateChanged', function(err) {
       if (err) {
         throw err;
       }
-      var state = preview?atem.state.tallys[that.cameraID] === 2 || atem.state.tallys[that.cameraID] === 3:atem.state.tallys[that.cameraID] === 1 || atem.state.tallys[that.cameraID] === 3;
+      var state = preview ? atem.state.tallys[that.cameraID] === 2 || atem.state.tallys[that.cameraID] === 3 : atem.state.tallys[that.cameraID] === 1 || atem.state.tallys[that.cameraID] === 3;
       if (invert) {
-        state=!state;
+        state = !state;
       }
-      that.led.write(state?1:0, function(err) {
+      that.led.write(state ? 1 : 0, function(err) {
         if (err) {
           throw err;
         }
@@ -42,14 +43,26 @@ function Light(inputId, pin, preview, invert, friendlyName) {
   };
 }
 
+var leds = [];
+
 atem.once('connect', function() {
-  var leds = [];
   setTimeout(function() {
     for (var i in lights) {
-      if(lights[i].hasOwnProperty("inputId")){
+      if (leds === []) {
         leds[i] = new Light(lights[i].inputId, lights[i].pin, lights[i].preview, lights[i].invert, lights[i].name);
         leds[i].init(atem);
       }
     }
   }, 500);
 });
+
+
+function exit() {
+  for (var i in leds) {
+    if (leds[i].initialised) {
+      leds[i].led.unexport();
+    }
+  }
+  process.exit();
+}
+process.on('SIGINT', exit);
