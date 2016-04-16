@@ -18,7 +18,7 @@ atem.on('stateChanged', function(err, state) {
 
 function Light(inputId, pin, preview, invert, friendlyName) {
   console.log(friendlyName + ' created as new light on pin ' + pin + '.');
-  this.inputId = inputId;
+  this.cameraID = inputId;
   this.pin = pin;
   this.friendlyName = friendlyName;
   this.invert = invert;
